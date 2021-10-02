@@ -3,6 +3,8 @@ import sys
 from os import path
 from settings import *
 from sprites import *
+from calorieMenu import *
+from attackDefendManager import *
 
 
 class Game:
@@ -39,6 +41,12 @@ class Game:
                     Wall(self, col, row)
                 if tile == 'P':
                     self.player = Player(self, col, row)
+                if tile == 'E':
+                    Enemy(self, col, row)
+                if tile == 'T':
+                    Tower(self, col, row)
+                if tile == 'B':
+                    Base(self, col, row)
 
     def run(self):
         # The game loop - when self.playing = false, the game ends.
@@ -78,6 +86,10 @@ class Game:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     self.quit()
+                if event.key == pg.K_e:
+                    calorieMenuScreen(self)
+                if event.key == pg.K_q:
+                    attackDefendManagerScreen(self)
 
 
 g = Game()  # Creates Game object.
