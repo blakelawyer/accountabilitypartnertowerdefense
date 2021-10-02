@@ -9,6 +9,7 @@ app = socketio.WSGIApp(sio, static_files={
 @sio.event
 def connect(sid, environ):
     print('connect ', sid)
+    sio.emit('my response', {'response': 'my response'})
 
 @sio.event
 def my_message(sid, data):

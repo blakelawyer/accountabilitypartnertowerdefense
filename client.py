@@ -1,14 +1,14 @@
 import socketio
-import requests
 
 sio = socketio.Client()
 
 @sio.event
 def connect():
     print('connection established')
+    message("adasdasd")
 
 @sio.event
-def my_message(data):
+def message(data):
     print('message received with ', data)
     sio.emit('my response', {'response': 'my response'})
 

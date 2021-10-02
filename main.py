@@ -4,7 +4,9 @@ from os import path
 from settings import *
 from sprites import *
 
+
 class Game:
+    # Initializes the game, screen size, title, clock object, and prepares to load map data.
     def __init__(self):
         pg.init()
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -13,6 +15,7 @@ class Game:
         pg.key.set_repeat(500, 100)
         self.load_data()
 
+    # Opens the map file and appends all the data to a list for easy access.
     def load_data(self):
         game_folder = path.dirname(__file__)
         self.map_data = []
@@ -21,9 +24,15 @@ class Game:
                 self.map_data.append(line)
 
     def new(self):
-        # initialize all variables and do all the setup for a new game
+
+        # Creates a sprite group for easy management of all enemies, towers, etc. Easy to iterate through.
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
+        self.enemies = pg.sprite.Group()
+        self.towers = pg.sprite.Group()
+        self.bases = pg.sprite.Group()
+
+        # Iterates through the map data and creates the corresponding objects.
         for row, tiles in enumerate(self.map_data):
             for col, tile in enumerate(tiles):
                 if tile == '1':
@@ -32,20 +41,21 @@ class Game:
                     self.player = Player(self, col, row)
 
     def run(self):
-        # game loop - set self.playing = False to end the game
+        # The game loop - when self.playing = false, the game ends.
         self.playing = True
         while self.playing:
             self.dt = self.clock.tick(FPS) / 1000
-            self.events()
-            self.update()
-            self.draw()
+            self.events()  # Handles events.
+            self.update()  # Updates the game state based on events + time that's passed.
+            self.draw()  # Each tick, we're re-drawing everything on the screen so that it's updated.
 
+    # Quits the game.
     def quit(self):
         pg.quit()
         sys.exit()
 
+    # Updates all sprites in the designated group.
     def update(self):
-        # update portion of the game loop
         self.all_sprites.update()
 
     def draw_grid(self):
@@ -55,13 +65,13 @@ class Game:
             pg.draw.line(self.screen, LIGHTGREY, (0, y), (WIDTH, y))
 
     def draw(self):
-        self.screen.fill(BGCOLOR)
-        self.draw_grid()
-        self.all_sprites.draw(self.screen)
+        self.screen.fill(BGCOLOR)  # Fills the screen with the background color.
+        self.draw_grid()  # Draws a grid for easy visualization, may be removed later.
+        self.all_sprites.draw(self.screen)  # Draws all sprites by bliting them on screen.
         pg.display.flip()
 
     def events(self):
-        # catch all events here
+        # Handles all events.
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.quit()
@@ -69,16 +79,11 @@ class Game:
                 if event.key == pg.K_ESCAPE:
                     self.quit()
 
-    def show_start_screen(self):
-        pass
 
-    def show_go_screen(self):
-        pass
+g = Game()  # Creates Game object.
 
-# create the game object
-g = Game()
-g.show_start_screen()
+# Executes until escape it hit or the game is quit otherwise.
+# Functionally executes once; run() is the loop that does the legwork.
 while True:
-    g.new()
-    g.run()
-    g.show_go_screen()
+    g.new()  # Initializes all the sprite groups and loads the tile map from map.txt.
+    g.run()  # This is where the magic happens..
