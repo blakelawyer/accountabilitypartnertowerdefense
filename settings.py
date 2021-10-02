@@ -8,6 +8,7 @@ RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 BLUE = (0, 0, 255)
 ORANGE = (255, 165, 0)
+HIGHLIGHT = (102, 255, 255)
 
 # game settings
 WIDTH = 512   # 16 * 64 or 32 * 32 or 64 * 16
