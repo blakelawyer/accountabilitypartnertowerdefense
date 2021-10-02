@@ -1,4 +1,5 @@
-# Project H.U.N.T.E.R (aka Accountability Partner Tower Defence)
+# Project H.U.N.T.E.R - Have Under Nine Towers Every Round
+(aka Accountability Partner Tower Defence)
 
 ## Objective: 
 Destroy N.A.T.E. - Not A Tough Enemy - before he destroys you.
