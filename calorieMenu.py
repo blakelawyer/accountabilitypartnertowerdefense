@@ -2,8 +2,12 @@ import pygame as pg
 import sys
 from pygame.locals import *
 
+import calories
+from calories import *
+
 pg.init()
 font = pg.font.SysFont(None, 20)
+
 
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
@@ -11,8 +15,14 @@ def draw_text(text, font, color, surface, x, y):
     textrect.topleft = (x, y)
     surface.blit(textobj, textrect)
 
-def calorieMenuScreen(self):
 
+def calorieMenuScreen(self):
+    burnedEntered = False
+    consumedEntered = False
+    doneEntering = False
+
+    caloriesBurned = 0
+    caloriesConsumed = 0
     pressedNumbers = ""
 
     loggingCalories = True
@@ -20,8 +30,19 @@ def calorieMenuScreen(self):
 
         self.screen.fill((0, 0, 0))
         draw_text("calorieMenu", font, (255, 255, 255), self.screen, 20, 20)
-        draw_text("How many calories did you burn?", font, (255, 255, 255), self.screen, 20, 60)
-        draw_text("ex. 300cal", font, (255, 255, 255), self.screen, 20, 80)
+        draw_text("Calories Burned: " + str(caloriesBurned), font, (255, 255, 255), self.screen, 320, 20)
+        draw_text("Calories Consumed: " + str(caloriesConsumed), font, (255, 255, 255), self.screen, 520, 20)
+        draw_text(pressedNumbers, font, (255, 255, 255), self.screen, 20, 80)
+
+        if burnedEntered == False and not doneEntering:
+            draw_text("How many calories did you burn today?", font, (255, 255, 255), self.screen, 20, 60)
+        elif burnedEntered == True and consumedEntered == False and doneEntering == False:
+            draw_text("How many calories did you consume today?", font, (255, 255, 255), self.screen, 20, 60)
+        elif doneEntering:
+            calories.netCalories = (2000 - caloriesConsumed) + caloriesBurned
+            draw_text("Net Calories: " + str(calories.netCalories), font, (255, 255, 255), self.screen, 20,
+                      60)
+        draw_text("Total Calorie Points: " + str(2000 - caloriesConsumed + caloriesBurned), font, (255, 255, 255), self.screen, 720, 20)
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -63,8 +84,21 @@ def calorieMenuScreen(self):
                 if event.key == pg.K_9:
                     pressedNumbers += "9"
                     print(pressedNumbers)
+                if event.key == pg.K_BACKSPACE:
+                    if (pressedNumbers != ""):
+                        pressedNumbers = pressedNumbers[:len(pressedNumbers) - 1]
+                        print("Backspace:", pressedNumbers)
+
                 if event.key == pg.K_RETURN:
-                    print("User hit enter!")
-                    enteredCalories = int(pressedNumbers)
+                    if (pressedNumbers != ""):
+                        enteredCalories = int(pressedNumbers)
+                        if (burnedEntered == False):
+                            caloriesBurned += enteredCalories
+                            burnedEntered = True
+                        elif (burnedEntered == True and consumedEntered == False):
+                            caloriesConsumed += enteredCalories
+                            consumedEntered = True
+                            doneEntering = True
+                        pressedNumbers = ""
 
         pg.display.update()
