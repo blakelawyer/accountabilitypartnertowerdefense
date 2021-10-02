@@ -23,13 +23,13 @@ class Game:
     def load_data(self):
         game_folder = path.dirname(__file__)
         self.map_data = []
-        with open(path.join(game_folder, 'map.txt'), 'rt') as f:
-            for line in f:
+        with open(path.join(game_folder, 'map1.txt'), 'rt') as f1:
+            for line in f1:
                 self.map_data.append(line)
         self.log_data = []
-        with open(path.join(game_folder, 'map.txt'), 'rt') as f:
-            for line in f:
-                self.map_data.append(line)
+        with open(path.join(game_folder, 'log1.txt'), 'rt') as f2:
+            for line in f2:
+                self.log_data.append(line)
 
     def new(self):
 
