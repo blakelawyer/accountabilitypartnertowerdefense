@@ -1,14 +1,17 @@
 import pygame as pg
 import sys
 from pygame.locals import *
+from sprites import *
 
 import calories
 
 pg.init()
 font = pg.font.SysFont(None, 20)
 clicked = False
+clickCounter = False
 
 class button():
+
     # colours for button and text
     button_col = (255, 0, 0)
     hover_col = (75, 225, 255)
@@ -25,6 +28,7 @@ class button():
 
     def draw_button(self, screen):
         global clicked
+        global clickCounter
         action = False
 
         # get mouse position
@@ -77,5 +81,14 @@ def defenseManagerScreen(self):
                     sys.exit()
                 if event.key == pg.K_q:
                     managing = False
+            if event.type == MOUSEBUTTONDOWN:
+                x, y = pg.mouse.get_pos()
+                if (500 <= x <= 680 and 500 <= y <= 580):
+                    print("pressed")
+                    #Tower(self, 5, 5)
+                    #image = pg.Surface((TILESIZE, TILESIZE))
+                    #image.fill(BLUE)
+                    #self.screen.blit(image, [5*TILESIZE, 5*TILESIZE])
+
 
         pg.display.update()
