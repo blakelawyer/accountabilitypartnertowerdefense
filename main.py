@@ -4,7 +4,7 @@ from os import path
 from settings import *
 from sprites import *
 from calorieMenu import *
-from attackDefendManager import *
+from defenseManager import *
 
 
 class Game:
@@ -36,6 +36,7 @@ class Game:
         self.towers = pg.sprite.Group()
         self.bases = pg.sprite.Group()
         self.paths = pg.sprite.Group()
+        self.portals = pg.sprite.Group()
 
         # Iterates through the map data and creates the corresponding objects.
         for row, tiles in enumerate(self.map_data):
@@ -44,12 +45,12 @@ class Game:
                     Wall(self, col, row)
                 if tile == 'E':
                     Enemy(self, col, row)
-                if tile == 'T':
-                    Tower(self, col, row)
-                if tile == 'B':
-                    Base(self, col, row)
                 if tile == 'P':
                     Path(self, col, row)
+                if tile == 'X':
+                    Portal(self, col, row)
+                if tile == 'B':
+                    Base(self, col, row)
 
     def run(self):
         # The game loop - when self.playing = false, the game ends.
@@ -92,7 +93,7 @@ class Game:
                 if event.key == pg.K_e:
                     calorieMenuScreen(self)
                 if event.key == pg.K_q:
-                    attackDefendManagerScreen(self)
+                    defenseManagerScreen(g)
 
 
 g = Game()  # Creates Game object.
