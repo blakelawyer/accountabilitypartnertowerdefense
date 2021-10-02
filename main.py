@@ -33,20 +33,21 @@ class Game:
         self.enemies = pg.sprite.Group()
         self.towers = pg.sprite.Group()
         self.bases = pg.sprite.Group()
+        self.paths = pg.sprite.Group()
 
         # Iterates through the map data and creates the corresponding objects.
         for row, tiles in enumerate(self.map_data):
             for col, tile in enumerate(tiles):
                 if tile == '1':
                     Wall(self, col, row)
-                if tile == 'P':
-                    self.player = Player(self, col, row)
                 if tile == 'E':
                     Enemy(self, col, row)
                 if tile == 'T':
                     Tower(self, col, row)
                 if tile == 'B':
                     Base(self, col, row)
+                if tile == 'P':
+                    Path(self, col, row)
 
     def run(self):
         # The game loop - when self.playing = false, the game ends.
