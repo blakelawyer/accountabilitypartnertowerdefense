@@ -79,6 +79,8 @@ class Enemy(pg.sprite.Sprite):
         self.game = game
         self.image = pg.Surface((TILESIZE, TILESIZE))
         self.image.fill(RED)
+        image = pg.image.load("tower.png")
+        self.image = image
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y

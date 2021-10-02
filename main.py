@@ -13,6 +13,8 @@ class Game:
         pg.init()
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         pg.display.set_caption(TITLE)
+        icon = pg.image.load("tower.png")
+        pg.display.set_icon(icon)
         self.clock = pg.time.Clock()
         pg.key.set_repeat(500, 100)
         self.load_data()
