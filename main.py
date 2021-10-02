@@ -26,6 +26,10 @@ class Game:
         with open(path.join(game_folder, 'map.txt'), 'rt') as f:
             for line in f:
                 self.map_data.append(line)
+        self.log_data = []
+        with open(path.join(game_folder, 'map.txt'), 'rt') as f:
+            for line in f:
+                self.map_data.append(line)
 
     def new(self):
 
