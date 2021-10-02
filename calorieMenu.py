@@ -39,10 +39,10 @@ def calorieMenuScreen(self):
         elif burnedEntered == True and consumedEntered == False and doneEntering == False:
             draw_text("How many calories did you consume today?", font, (255, 255, 255), self.screen, 20, 60)
         elif doneEntering:
-            calories.netCalories = (2000 - caloriesConsumed) + caloriesBurned
+            calories.netCalories = (2500 - caloriesConsumed) + caloriesBurned
             draw_text("Net Calories: " + str(calories.netCalories), font, (255, 255, 255), self.screen, 20,
                       60)
-        draw_text("Total Calorie Points: " + str(2000 - caloriesConsumed + caloriesBurned), font, (255, 255, 255), self.screen, 720, 20)
+        draw_text("Total Calorie Points: " + str(2500 - caloriesConsumed + caloriesBurned), font, (255, 255, 255), self.screen, 720, 20)
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
