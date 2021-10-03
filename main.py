@@ -58,7 +58,7 @@ class Game:
                 if tile == 'B':
                     Base(self, col, row)
                 if tile == 'T':
-                    calories.enemy_list.append(Tower(self, col, row))
+                    Tower(self, col, row)
 
     def run(self):
         # The game loop - when self.playing = false, the game ends.
@@ -78,7 +78,9 @@ class Game:
     def update(self):
         self.all_sprites.update()
         for tower in self.towers:
-            tower.update
+            tower.update_tower()
+        for enemy in self.enemies:
+            enemy.update_enemy()
 
     def draw_grid(self):
         for x in range(0, WIDTH, TILESIZE):

@@ -89,13 +89,8 @@ class Enemy(pg.sprite.Sprite):
         self.health = 100
         self.speed = 1
 
-        def update(self):
-            self.x += self.vx * self.game.dt
-            self.y += self.vy * self.game.dt
-            self.rect.x = self.x
-            self.collide_with_walls('x')
-            self.rect.y = self.y
-            self.collide_with_walls('y')
+        def update_tower(self):
+            pass
 
 
 class Tower(pg.sprite.Sprite):
@@ -118,7 +113,7 @@ class Tower(pg.sprite.Sprite):
         self.shotSpeed = 1
 
     def update_tower(self):
-        print(1)
+        pass
 
 
 class Base(pg.sprite.Sprite):
