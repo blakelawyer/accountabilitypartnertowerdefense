@@ -84,6 +84,8 @@ class Game:
             calories.alive.append(Enemy(self, 31, 9))
             calories.remaining.append(len(self.path))
         for i in range(0, distance):
+            calories.alive.append(Path(self, 31, 9))
+            calories.remaining.append(len(self.path))
 
         i = 0
         for every in calories.alive:
