@@ -13,20 +13,15 @@ client.connect(ADDR)
 
 def send(msg):
     message = msg.encode(FORMAT)
-    msg_length = len(message)
-    send_length = str(msg_length).encode(FORMAT)
-    send_length += b' ' * (HEADER - len(send_length))
-    client.send(send_length)
     client.send(message)
     thread = threading.Thread(target=recv)
     thread.start()
 
 def recv():
     while True:
-        msg_length = client.recv(HEADER).decode(FORMAT)
-        if msg_length:
-            msg_length = int(msg_length)
-            print(client.recv(msg_length).decode(FORMAT))
+        msg = client.recv(2048).decode(FORMAT))
+        print(f"[{SERVER}] {msg}")
+
 
 while True:
     send(input())

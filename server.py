@@ -14,11 +14,8 @@ server.bind(ADDR)
 
 def handle_client(conn, addr):
     while True:
-        msg_length = conn.recv(HEADER).decode(FORMAT)
-        if msg_length:
-            msg_length = int(msg_length)
-            msg = conn.recv(msg_length).decode(FORMAT)
-            print(f"[{addr}] {msg}")
+        msg = conn.recv(2048).decode(FORMAT)
+        print(f"[{addr}] {msg}")
 
 def start():
     server.listen()
@@ -28,10 +25,6 @@ def start():
     thread.start()
     while True:
         message = input().encode(FORMAT)
-        msg_length = len(message)
-        send_length = str(msg_length).encode(FORMAT)
-        send_length += b' ' * (HEADER - len(send_length))
-        conn.send(send_length)
         conn.send(message)
 
 print("[STARTING] server is starting...")
