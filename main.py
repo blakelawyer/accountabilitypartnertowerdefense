@@ -1,8 +1,9 @@
 import pygame as pg
 import sys
 from os import path
-
+import waveManager
 import calories
+from paused import paused
 from settings import *
 from sprites import *
 from calorieMenu import *
@@ -19,19 +20,15 @@ class Game:
         pg.display.set_icon(icon)
         self.clock = pg.time.Clock()
         pg.key.set_repeat(500, 100)
-        self.load_data()
+        self.map_data()
 
     # Opens the map file and appends all the data to a list for easy access.
-    def load_data(self):
+    def map_data(self):
         game_folder = path.dirname(__file__)
         self.map_data = []
         with open(path.join(game_folder, 'map1.txt'), 'rt') as f1:
             for line in f1:
                 self.map_data.append(line)
-        self.log_data = []
-        with open(path.join(game_folder, 'log1.txt'), 'rt') as f2:
-            for line in f2:
-                self.log_data.append(line)
 
     def new(self):
 
@@ -76,11 +73,11 @@ class Game:
 
     # Updates all sprites in the designated group.
     def update(self):
-        self.all_sprites.update()
         for tower in self.towers:
             tower.update_tower()
         for enemy in self.enemies:
             enemy.update_enemy()
+        self.all_sprites.update()
 
     def draw_grid(self):
         for x in range(0, WIDTH, TILESIZE):
@@ -106,6 +103,9 @@ class Game:
                     calorieMenuScreen(self)
                 if event.key == pg.K_q:
                     defenseManagerScreen(g)
+                if event.key == pg.K_SPACE:
+                    paused(self)
+            # if event.type == pg.
 
 
 g = Game()  # Creates Game object.
