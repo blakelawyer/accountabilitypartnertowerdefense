@@ -2,7 +2,7 @@ import socket
 import threading
 
 HEADER = 64
-PORT = 8009
+PORT = 8007
 SERVER = socket.gethostbyname("172.16.0.80")
 ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
@@ -12,16 +12,6 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
 
 clients = []
-
-def handle_client1(conn, addr):
-    msg = conn.recv(2048).decode(FORMAT)
-    print(f"[{addr}] {msg}")
-    clients.append(msg)
-
-def handle_client2(conn, addr):
-    msg = conn.recv(2048).decode(FORMAT)
-    print(f"[{addr}] {msg}")
-    clients.append(msg)
 
 
 def start():

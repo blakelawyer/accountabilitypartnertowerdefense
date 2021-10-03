@@ -137,12 +137,3 @@ class Game:
         #print(self.waveTime)
         print(len(calories.enemy_list))
 
-
-
-g = Game()  # Creates Game object.
-
-# Executes until escape it hit or the game is quit otherwise.
-# Functionally executes once; run() is the loop that does the legwork.
-while True:
-    g.new()  # Initializes all the sprite groups and loads the tile map from map.txt.
-    g.run()  # This is where the magic happens..
