@@ -90,8 +90,15 @@ class Enemy(pg.sprite.Sprite):
         self.health = 100
         self.speed = 1
 
-    def update_enemy(self):
-        pass
+    def update_enemy(self, moveorder, movenumber):
+        if (moveorder == 'a'):
+            self.x -= 1
+        if (moveorder == 'd'):
+            self.x += 1
+        if (moveorder == 'w'):
+            self.y -= 1
+        if (moveorder == 's'):
+            self.y += 1
 
 
 class Tower(pg.sprite.Sprite):
