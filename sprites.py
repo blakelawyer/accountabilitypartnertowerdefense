@@ -113,16 +113,26 @@ class Tower(pg.sprite.Sprite):
         self.range = 10
         self.shotSpeed = 1
 
+    def shoot(self, enemy):
+        print("Shooting:")
+        print(enemy)
+
     def update_tower(self):
+
+        min_distance = 999999
+        target = -1
+
         for enemy in calories.enemy_list:
             a = [self.x, self.y]
             b = [enemy.x, enemy.y]
             if (math.dist(a, b) <= 5):
-                print("In range!")
+                if math.dist(a,b) < min_distance:
+                    min_distance = math.dist(a,b)
+                    target = enemy
 
+        if target != -1:
+            self.shoot(enemy)
 
-    def shoot(self, pg.):
-        pass
 
 
 
