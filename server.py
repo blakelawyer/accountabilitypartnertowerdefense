@@ -1,23 +1,20 @@
-import eventlet
-import socketio
+import socket
 
-sio = socketio.Server()
-app = socketio.WSGIApp(sio, static_files={
-    '/': {'content_type': 'text/html', 'filename': 'index.html'}
-})
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((socket.gethostname(), 5000))
 
-@sio.event
-def connect(sid, environ):
-    print('connect ', sid)
-    sio.emit('my response', {'response': 'my response'})
+s.listen(5)
 
-@sio.event
-def my_message(sid, data):
-    print('message ', data)
+while True:
+    clientsocket, address = s.accept()
+    print(f"Connection from {address} has been established")
+    clientsocket.send(bytes("Welcome to the server", "utf-8"))
 
-@sio.event
-def disconnect(sid):
-    print('disconnect ', sid)
 
-if __name__ == '__main__':
-    eventlet.wsgi.server(eventlet.listen(('', 5000)), app)
+
+
+
+
+
+
+

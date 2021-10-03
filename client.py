@@ -1,20 +1,11 @@
-import socketio
+import socket
 
-sio = socketio.Client()
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((socket.gethostname(), 5000))
 
-@sio.event
-def connect():
-    print('connection established')
-    message("adasdasd")
+while True:
+    msg = s.recv(24)
+    print(msg.decode("utf-8"))
 
-@sio.event
-def message(data):
-    print('message received with ', data)
-    sio.emit('my response', {'response': 'my response'})
 
-@sio.event
-def disconnect():
-    print('disconnected from server')
 
-sio.connect('http://localhost:5000')
-sio.wait()
