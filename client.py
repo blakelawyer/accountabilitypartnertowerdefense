@@ -1,20 +1,7 @@
 import socket
-import threading
-import pygame as pg
-import sys
-from os import path
-import waveManager
-import calories
-from paused import paused
-from settings import *
-from sprites import *
-from calorieMenu import *
-from defenseManager import *
-from gameOver import *
-import main
 
 HEADER = 64
-PORT = 8009
+PORT = 8006
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
 SERVER = "172.16.0.80"
@@ -26,15 +13,12 @@ client.connect(ADDR)
 def send(msg):
     message = msg.encode(FORMAT)
     client.send(message)
-    thread = threading.Thread(target=recv)
-    thread.start()
-
-def recv():
-    msg = client.recv(2048).decode(FORMAT)
-    print(f"[{SERVER}] {msg}")
 
 
 send(input())
+msg = client.recv(2048).decode(FORMAT)
+print(f"[{SERVER}] {msg}")
+import main
 g = main.Game()  # Creates Game object.
 
 # Executes until escape it hit or the game is quit otherwise.

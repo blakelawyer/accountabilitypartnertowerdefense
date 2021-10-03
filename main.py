@@ -7,7 +7,6 @@ from gameOver import *
 import logging
 import threading
 import time
-import server
 
 class Game:
     # Initializes the game, screen size, title, clock object, and prepares to load map data.
