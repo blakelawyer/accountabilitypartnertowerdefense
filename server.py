@@ -18,15 +18,15 @@ def handle_client(conn, addr):
         print(f"[{addr}] {msg}")
 
 def start():
+    print("[STARTING] server is starting...")
     server.listen()
     print(f"[LISTENING] Server is listening on {SERVER}")
     conn, addr = server.accept()
     thread = threading.Thread(target=handle_client, args=(conn, addr))
     thread.start()
+
     while True:
         message = input().encode(FORMAT)
         conn.send(message)
 
-print("[STARTING] server is starting...")
-start()
 
