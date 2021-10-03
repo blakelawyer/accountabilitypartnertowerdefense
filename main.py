@@ -70,22 +70,22 @@ class Game:
     def update(self):
         for tower in self.towers:
             tower.update_tower()
-        self.update_alive(2)
+        self.update_alive(0.2, 2, 20)
         self.all_sprites.update()
 
-    def update_alive(self, distance):
-        sleep(0.2)
+    def update_alive(self, speed, distance, numOfEnemies):
+        sleep(speed)
         self.path = "aaaaassaaaaaaaaawwwwwwwwaaaaaassssssssaaaaaassssddddddsssssaaaaaaawwaaaa"
         for every in range(0, len(calories.alive)):
             calories.remaining[every] = calories.remaining[every] - 1
             if len(calories.remaining) < 1:
                 calories.alive.pop(every)  # Game has been lost
-        if len(calories.alive) < 20:
+        if len(calories.alive) < numOfEnemies:
             calories.alive.append(Enemy(self, 31, 9))
             calories.remaining.append(len(self.path))
-        for i in range(0, distance):
-            calories.alive.append(Path(self, 31, 9))
-            calories.remaining.append(len(self.path))
+        # for i in range(0, distance):
+        #     calories.alive.append(Path(self, 31, 9))
+        #     calories.remaining.append(len(self.path))
 
         i = 0
         for every in calories.alive:
