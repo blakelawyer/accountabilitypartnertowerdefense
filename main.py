@@ -60,6 +60,7 @@ class Game:
                     Tower(self, col, row)
 
     def gameOverCheck(self):
+        # A small change
         if calories.baseHealth <= 0:
             gameOverScreen(self)
 
