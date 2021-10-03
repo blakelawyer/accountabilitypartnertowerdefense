@@ -99,16 +99,14 @@ class Tower(pg.sprite.Sprite):
         self.groups = game.all_sprites, game.towers
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pg.Surface((TILESIZE, TILESIZE))
-        self.image.fill(BLUE)
-        image = pg.image.load("tower.png")
-        self.image = image
+        self.image = pg.image.load("catapult-2.png")
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
 
+        self.time = 0
         self.damage = 25
         self.range = 10
         self.shotSpeed = 1
@@ -131,7 +129,14 @@ class Tower(pg.sprite.Sprite):
                     target = enemy
 
         if target != -1:
-            self.shoot(enemy)
+            if self.time == 0:
+                self.time = pg.time.get_ticks()
+                self.shoot(enemy)
+            else:
+                current_time = pg.time.get_ticks()
+                if current_time - self.time >= 1000:
+                    self.shoot(enemy)
+                    self.time = current_time
 
 
 
