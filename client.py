@@ -19,7 +19,7 @@ def send(msg):
 
 def recv():
     while True:
-        msg = client.recv(2048).decode(FORMAT))
+        msg = client.recv(2048).decode(FORMAT)
         print(f"[{SERVER}] {msg}")
 
 
