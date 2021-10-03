@@ -66,8 +66,7 @@ class Wall(pg.sprite.Sprite):
         self.groups = game.all_sprites, game.walls
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pg.Surface((TILESIZE, TILESIZE))
-        self.image.fill(GREEN)
+        self.image = pg.image.load("bricks.png")
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -79,8 +78,7 @@ class Enemy(pg.sprite.Sprite):
         self.groups = game.all_sprites, game.enemies
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pg.Surface((TILESIZE, TILESIZE))
-        self.image.fill(RED)
+        self.image = pg.image.load("meat32.png")
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -205,12 +203,9 @@ class Tower(pg.sprite.Sprite):
         for enemy in calories.enemy_list:
             a = [self.x, self.y]
             b = [enemy.x, enemy.y]
-            print(math.dist(a, b))
             if math.dist(a, b) <= 5:
-                print("in rangasd")
                 if math.dist(a, b) < min_distance:
                     min_distance = math.dist(a, b)
-                    print("Min distance", min_distance)
                     target = enemy
 
         if target != -1:
@@ -246,8 +241,7 @@ class Portal(pg.sprite.Sprite):
         self.groups = game.all_sprites, game.portals
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pg.Surface((TILESIZE, TILESIZE))
-        self.image.fill(ORANGE)
+        self.image = pg.image.load("portal32.png")
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -261,8 +255,7 @@ class Path(pg.sprite.Sprite):
         self.groups = game.all_sprites, game.paths
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pg.Surface((TILESIZE, TILESIZE))
-        self.image.fill(YELLOW)
+        self.image = pg.image.load("cobble.png")
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
