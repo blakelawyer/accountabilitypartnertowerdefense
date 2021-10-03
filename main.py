@@ -1,8 +1,14 @@
+import pygame as pg
+import sys
 from os import path
-
+import waveManager
+import calories
+from paused import paused
+from settings import *
+from sprites import *
 from calorieMenu import *
 from defenseManager import *
-from paused import paused
+from gameOver import *
 
 
 class Game:
@@ -43,8 +49,8 @@ class Game:
                     Wall(self, col, row)
                 if tile == 'E':
                     calories.enemy_list.append(Enemy(self, col, row))
-                if tile == 'P':
-                    Path(self, col, row)
+                #if tile == 'P':
+                    #Path(self, col, row)
                 if tile == 'X':
                     Portal(self, col, row)
                 if tile == 'B':
@@ -52,11 +58,17 @@ class Game:
                 if tile == 'T':
                     Tower(self, col, row)
 
+    def gameOverCheck(self):
+        if calories.baseHealth <= 0:
+            gameOverScreen(self)
+
+
     def run(self):
         # The game loop - when self.playing = false, the game ends.
         self.playing = True
         while self.playing:
             self.dt = self.clock.tick(FPS) / 1000
+            self.gameOverCheck()
             self.events()  # Handles events.
             self.update()  # Updates the game state based on events + time that's passed.
             self.draw()  # Each tick, we're re-drawing everything on the screen so that it's updated.
@@ -70,40 +82,60 @@ class Game:
     def update(self):
         for tower in self.towers:
             tower.update_tower()
-        self.update_alive(0.2, 2, 20)
+        for enemy in self.enemies:
+            enemy.update_enemy()
         self.all_sprites.update()
-
-    def update_alive(self, speed, distance, numOfEnemies):
-        sleep(speed)
-        self.path = "aaaaassaaaaaaaaawwwwwwwwaaaaaassssssssaaaaaassssddddddsssssaaaaaaawwaaaa"
-        for every in range(0, len(calories.alive)):
-            calories.remaining[every] = calories.remaining[every] - 1
-            if len(calories.remaining) < 1:
-                calories.alive.pop(every)  # Game has been lost
-        if len(calories.alive) < numOfEnemies:
-            calories.alive.append(Enemy(self, 31, 9))
-            calories.remaining.append(len(self.path))
-        # for i in range(0, distance):
-        #     calories.alive.append(Path(self, 31, 9))
-        #     calories.remaining.append(len(self.path))
-
-        i = 0
-        for every in calories.alive:
-            if self.path[72 - calories.remaining[i]] == 'a':
-                every.rect.x -= 32
-            if self.path[72 - calories.remaining[i]] == 'd':
-                every.rect.x += 32
-            if self.path[72 - calories.remaining[i]] == 'w':
-                every.rect.y -= 32
-            if self.path[72 - calories.remaining[i]] == 's':
-                every.rect.y += 32
-            i += 1
 
     def draw_grid(self):
         for x in range(0, WIDTH, TILESIZE):
             pg.draw.line(self.screen, LIGHTGREY, (x, 0), (x, HEIGHT))
         for y in range(0, HEIGHT, TILESIZE):
             pg.draw.line(self.screen, LIGHTGREY, (0, y), (WIDTH, y))
+
+        #pg.draw.line(self.screen, RED, (26 * TILESIZE, 9 * TILESIZE), (31 * TILESIZE, 9 * TILESIZE)) #1
+        #pg.draw.line(self.screen, RED, (27 * TILESIZE, 10 * TILESIZE), (31 * TILESIZE, 10 * TILESIZE))  # 1
+
+
+        #pg.draw.line(self.screen, RED, (26 * TILESIZE, 11 * TILESIZE), (25 * TILESIZE, 9 * TILESIZE)) #2
+        #pg.draw.line(self.screen, RED, (27 * TILESIZE, 10 * TILESIZE), (27 * TILESIZE, 12 * TILESIZE))
+
+
+        #pg.draw.line(self.screen, RED, (17 * TILESIZE, 11 * TILESIZE), (27 * TILESIZE, 11 * TILESIZE))
+        #pg.draw.line(self.screen, RED, (27 * TILESIZE, 11 * TILESIZE), (16 * TILESIZE, 12 * TILESIZE))#3
+
+
+        #pg.draw.line(self.screen, RED, (19 * TILESIZE, 3 * TILESIZE), (19 * TILESIZE, 11 * TILESIZE))
+        #pg.draw.line(self.screen, RED, (16 * TILESIZE, 12 * TILESIZE), (16 * TILESIZE, 4 * TILESIZE))#4
+
+
+        #pg.draw.line(self.screen, RED, (11 * TILESIZE, 3 * TILESIZE), (17 * TILESIZE, 3 * TILESIZE))
+        #pg.draw.line(self.screen, RED, (16 * TILESIZE, 4 * TILESIZE), (12 * TILESIZE, 4 * TILESIZE))#5
+
+
+        #pg.draw.line(self.screen, RED, (11 * TILESIZE, 11 * TILESIZE), (11 * TILESIZE, 3 * TILESIZE))
+        #pg.draw.line(self.screen, RED, (12 * TILESIZE, 4 * TILESIZE), (12 * TILESIZE, 12 * TILESIZE))#6
+
+
+        #pg.draw.line(self.screen, RED, (5 * TILESIZE, 11 * TILESIZE), (11 * TILESIZE, 11 * TILESIZE))#7
+
+
+        #pg.draw.line(self.screen, RED, (5 * TILESIZE, 15 * TILESIZE), (5 * TILESIZE, 11 * TILESIZE)) #8
+
+
+        #pg.draw.line(self.screen, RED, (11 * TILESIZE, 15 * TILESIZE), (5 * TILESIZE, 15 * TILESIZE)) #9
+
+
+        #pg.draw.line(self.screen, RED, (11 * TILESIZE, 20 * TILESIZE), (11 * TILESIZE, 15 * TILESIZE)) #10
+
+
+        #pg.draw.line(self.screen, RED, (4 * TILESIZE, 20 * TILESIZE), (11 * TILESIZE, 20 * TILESIZE)) #11
+
+
+        #pg.draw.line(self.screen, RED, (4 * TILESIZE, 18 * TILESIZE), (4 * TILESIZE, 20 * TILESIZE)) #12
+
+
+        #pg.draw.line(self.screen, RED, (0 * TILESIZE, 18 * TILESIZE), (4 * TILESIZE, 18 * TILESIZE)) #13
+
 
     def draw(self):
         self.screen.fill(BGCOLOR)  # Fills the screen with the background color.

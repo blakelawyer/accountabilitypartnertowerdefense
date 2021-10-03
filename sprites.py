@@ -1,5 +1,3 @@
-from time import sleep
-
 import pygame as pg
 
 import calories
@@ -76,7 +74,6 @@ class Wall(pg.sprite.Sprite):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
 
-
 class Enemy(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.enemies
@@ -89,9 +86,95 @@ class Enemy(pg.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
+        self.level = 1
 
         self.health = 100
-        self.speed = 6
+        self.speed = 1
+
+    def update_enemy(self):
+        toRemove = -1
+        for enemy in calories.enemy_list:
+            if enemy.health <= 0:
+                enemy.kill()
+                toRemove = enemy
+        if toRemove != -1:
+            calories.enemy_list.remove(toRemove)
+
+        toRemove = -1
+        for enemy in calories.enemy_list:
+            if enemy.level == 1:
+                if enemy.rect.x > 26 * TILESIZE:
+                    enemy.rect.x -= 1
+                elif enemy.rect.x == 26 * TILESIZE:
+                    enemy.level += 1
+            if enemy.level == 2:
+                if enemy.rect.y < 11 * TILESIZE:
+                    enemy.rect.y += 1
+                elif enemy.rect.y == 11 * TILESIZE:
+                    enemy.level += 1
+            if enemy.level == 3:
+                if enemy.rect.x > 17 * TILESIZE:
+                    enemy.rect.x -= 1
+                elif enemy.rect.x == 17 * TILESIZE:
+                    enemy.level += 1
+            if enemy.level == 4:
+                if enemy.rect.y > 3 * TILESIZE:
+                    enemy.rect.y -= 1
+                elif enemy.rect.y == 3 * TILESIZE:
+                    enemy.level += 1
+            if enemy.level == 5:
+                if enemy.rect.x > 11 * TILESIZE:
+                    enemy.rect.x -= 1
+                elif enemy.rect.x == 11 * TILESIZE:
+                    enemy.level += 1
+            if enemy.level == 6:
+                if enemy.rect.y < 11 * TILESIZE:
+                    enemy.rect.y += 1
+                elif enemy.rect.y == 11 * TILESIZE:
+                    enemy.level += 1
+            if enemy.level == 7:
+                if enemy.rect.x > 5 * TILESIZE:
+                    enemy.rect.x -= 1
+                elif enemy.rect.x == 5 * TILESIZE:
+                    enemy.level += 1
+            if enemy.level == 8:
+                if enemy.rect.y < 15 * TILESIZE:
+                    enemy.rect.y += 1
+                elif enemy.rect.y == 15 * TILESIZE:
+                    enemy.level += 1
+            if enemy.level == 9:
+                if enemy.rect.x < 11 * TILESIZE:
+                    enemy.rect.x += 1
+                elif enemy.rect.x == 11 * TILESIZE:
+                    enemy.level += 1
+            if enemy.level == 10:
+                if enemy.rect.y < 20 * TILESIZE:
+                    enemy.rect.y += 1
+                elif enemy.rect.y == 20 * TILESIZE:
+                    enemy.level += 1
+            if enemy.level == 11:
+                if enemy.rect.x > 4 * TILESIZE:
+                    enemy.rect.x -= 1
+                elif enemy.rect.x == 4 * TILESIZE:
+                    enemy.level += 1
+            if enemy.level == 12:
+                if enemy.rect.y > 18 * TILESIZE:
+                    enemy.rect.y -= 1
+                elif enemy.rect.y == 18 * TILESIZE:
+                    enemy.level += 1
+            if enemy.level == 13:
+                if enemy.rect.x > 0:
+                    enemy.rect.x -= 1
+                elif enemy.rect.x == 0:
+                    enemy.level += 1
+            if enemy.level == 14:
+                calories.baseHealth -= 1
+                enemy.kill()
+                toRemove = enemy
+
+        if toRemove != -1:
+            calories.enemy_list.remove(toRemove)
+
 
 
 class Tower(pg.sprite.Sprite):
@@ -112,8 +195,7 @@ class Tower(pg.sprite.Sprite):
         self.shotSpeed = 1
 
     def shoot(self, enemy):
-        print("Shooting:")
-        print(enemy)
+        enemy.health -= 25
 
     def update_tower(self):
 
@@ -123,20 +205,25 @@ class Tower(pg.sprite.Sprite):
         for enemy in calories.enemy_list:
             a = [self.x, self.y]
             b = [enemy.x, enemy.y]
-            if (math.dist(a, b) <= 5):
+            print(math.dist(a, b))
+            if math.dist(a, b) <= 5:
+                print("in rangasd")
                 if math.dist(a, b) < min_distance:
                     min_distance = math.dist(a, b)
+                    print("Min distance", min_distance)
                     target = enemy
 
         if target != -1:
             if self.time == 0:
                 self.time = pg.time.get_ticks()
-                self.shoot(enemy)
+                self.shoot(target)
             else:
                 current_time = pg.time.get_ticks()
                 if current_time - self.time >= 1000:
-                    self.shoot(enemy)
+                    self.shoot(target)
                     self.time = current_time
+
+
 
 
 class Base(pg.sprite.Sprite):
@@ -154,7 +241,6 @@ class Base(pg.sprite.Sprite):
 
         self.health = 10
 
-
 class Portal(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.portals
@@ -169,7 +255,6 @@ class Portal(pg.sprite.Sprite):
         self.rect.y = y * TILESIZE
 
         self.health = 10
-
 
 class Path(pg.sprite.Sprite):
     def __init__(self, game, x, y):

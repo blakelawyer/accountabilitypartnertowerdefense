@@ -146,22 +146,6 @@ def defenseManagerScreen(self):
             tower7.draw_button(self.screen)
             tower8.draw_button(self.screen)
 
-            #self.screen.blit(highlight, [2*TILESIZE, 20*TILESIZE])
-
-            #self.screen.blit(highlight, [8*TILESIZE, 18*TILESIZE])
-
-            #self.screen.blit(highlight, [8*TILESIZE, 13*TILESIZE])
-
-            #self.screen.blit(highlight, [8*TILESIZE, 7*TILESIZE])
-
-            #self.screen.blit(highlight, [14*TILESIZE, 6*TILESIZE])
-
-            #self.screen.blit(highlight, [20*TILESIZE, 7*TILESIZE])
-
-            #self.screen.blit(highlight, [21*TILESIZE, 14*TILESIZE])
-
-            #self.screen.blit(highlight, [27*TILESIZE, 7*TILESIZE])
-
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 pg.quit()
