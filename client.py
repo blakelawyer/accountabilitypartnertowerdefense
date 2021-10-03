@@ -2,10 +2,10 @@ import socket
 import threading
 
 HEADER = 64
-PORT = 8009
+PORT = 8008
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
-SERVER = "192.168.3.147"
+SERVER = "localhost"
 ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -23,7 +23,10 @@ def send(msg):
 
 def recv():
     while True:
-        print(client.recv(2048).decode(FORMAT))
+        msg_length = client.recv(HEADER).decode(FORMAT)
+        if msg_length:
+            msg_length = int(msg_length)
+            print(client.recv(msg_length).decode(FORMAT))
 
 while True:
     send(input())
