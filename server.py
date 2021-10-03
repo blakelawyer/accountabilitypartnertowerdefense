@@ -13,8 +13,6 @@ server.bind(ADDR)
 
 
 def handle_client(conn, addr):
-    thread = threading.Thread(target=reply, args=conn)
-    thread.start()
     while True:
         msg_length = conn.recv(HEADER).decode(FORMAT)
         if msg_length:
@@ -22,8 +20,12 @@ def handle_client(conn, addr):
             msg = conn.recv(msg_length).decode(FORMAT)
             print(f"[{addr}] {msg}")
 
-
-def reply(conn):
+def start():
+    server.listen()
+    print(f"[LISTENING] Server is listening on {SERVER}")
+    conn, addr = server.accept()
+    thread = threading.Thread(target=handle_client, args=(conn, addr))
+    thread.start()
     while True:
         message = input().encode(FORMAT)
         msg_length = len(message)
@@ -32,12 +34,6 @@ def reply(conn):
         conn.send(send_length)
         conn.send(message)
 
-def start():
-    server.listen()
-    print(f"[LISTENING] Server is listening on {SERVER}")
-    conn, addr = server.accept()
-    thread = threading.Thread(target=handle_client, args=(conn, addr))
-    thread.start()
-
 print("[STARTING] server is starting...")
 start()
+
