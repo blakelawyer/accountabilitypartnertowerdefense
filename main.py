@@ -55,6 +55,8 @@ class Game:
                     Portal(self, col, row)
                 if tile == 'B':
                     Base(self, col, row)
+                if tile == 'T':
+                    Tower(self, col, row)
 
     def run(self):
         # The game loop - when self.playing = false, the game ends.
