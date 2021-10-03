@@ -2,6 +2,7 @@ import pygame as pg
 
 import calories
 from settings import *
+import math
 
 
 class Player(pg.sprite.Sprite):
@@ -89,8 +90,8 @@ class Enemy(pg.sprite.Sprite):
         self.health = 100
         self.speed = 1
 
-        def update_tower(self):
-            pass
+    def update_enemy(self):
+        pass
 
 
 class Tower(pg.sprite.Sprite):
@@ -113,7 +114,16 @@ class Tower(pg.sprite.Sprite):
         self.shotSpeed = 1
 
     def update_tower(self):
+        for enemy in calories.enemy_list:
+            a = [self.x, self.y]
+            b = [enemy.x, enemy.y]
+            if (math.dist(a, b) <= 5):
+                print("In range!")
+
+
+    def shoot(self, pg.):
         pass
+
 
 
 class Base(pg.sprite.Sprite):

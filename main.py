@@ -50,7 +50,7 @@ class Game:
                 if tile == '1':
                     Wall(self, col, row)
                 if tile == 'E':
-                    Enemy(self, col, row)
+                    calories.enemy_list.append(Enemy(self, col, row))
                 if tile == 'P':
                     Path(self, col, row)
                 if tile == 'X':
