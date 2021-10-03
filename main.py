@@ -1,13 +1,8 @@
-import pygame as pg
-import sys
 from os import path
-import waveManager
-import calories
-from paused import paused
-from settings import *
-from sprites import *
+
 from calorieMenu import *
 from defenseManager import *
+from paused import paused
 
 
 class Game:
@@ -75,9 +70,34 @@ class Game:
     def update(self):
         for tower in self.towers:
             tower.update_tower()
-        for enemy in self.enemies:
-            enemy.update_enemy()
+        self.update_alive(2)
         self.all_sprites.update()
+
+    def update_alive(self, distance):
+        sleep(0.2)
+        self.path = "aaaaassaaaaaaaaawwwwwwwwaaaaaassssssssaaaaaassssddddddsssssaaaaaaawwaaaa"
+        for every in range(0, len(calories.alive)):
+            calories.remaining[every] = calories.remaining[every] - 1
+            if len(calories.remaining) < 1:
+                calories.alive.pop(every)  # Game has been lost
+        if len(calories.alive) < 20:
+            calories.alive.append(Enemy(self, 31, 9))
+            calories.remaining.append(len(self.path))
+        for i in range(0, distance):
+            calories.alive.append(Path(self, 31, 9))
+            calories.remaining.append(len(self.path))
+
+        i = 0
+        for every in calories.alive:
+            if self.path[72 - calories.remaining[i]] == 'a':
+                every.rect.x -= 32
+            if self.path[72 - calories.remaining[i]] == 'd':
+                every.rect.x += 32
+            if self.path[72 - calories.remaining[i]] == 'w':
+                every.rect.y -= 32
+            if self.path[72 - calories.remaining[i]] == 's':
+                every.rect.y += 32
+            i += 1
 
     def draw_grid(self):
         for x in range(0, WIDTH, TILESIZE):

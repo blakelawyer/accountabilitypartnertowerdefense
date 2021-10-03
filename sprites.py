@@ -1,3 +1,5 @@
+from time import sleep
+
 import pygame as pg
 
 import calories
@@ -74,6 +76,7 @@ class Wall(pg.sprite.Sprite):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
 
+
 class Enemy(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.enemies
@@ -88,17 +91,7 @@ class Enemy(pg.sprite.Sprite):
         self.rect.y = y * TILESIZE
 
         self.health = 100
-        self.speed = 1
-
-    def update_enemy(self, moveorder, movenumber):
-        if (moveorder == 'a'):
-            self.x -= 1
-        if (moveorder == 'd'):
-            self.x += 1
-        if (moveorder == 'w'):
-            self.y -= 1
-        if (moveorder == 's'):
-            self.y += 1
+        self.speed = 6
 
 
 class Tower(pg.sprite.Sprite):
@@ -131,8 +124,8 @@ class Tower(pg.sprite.Sprite):
             a = [self.x, self.y]
             b = [enemy.x, enemy.y]
             if (math.dist(a, b) <= 5):
-                if math.dist(a,b) < min_distance:
-                    min_distance = math.dist(a,b)
+                if math.dist(a, b) < min_distance:
+                    min_distance = math.dist(a, b)
                     target = enemy
 
         if target != -1:
@@ -144,8 +137,6 @@ class Tower(pg.sprite.Sprite):
                 if current_time - self.time >= 1000:
                     self.shoot(enemy)
                     self.time = current_time
-
-
 
 
 class Base(pg.sprite.Sprite):
@@ -163,6 +154,7 @@ class Base(pg.sprite.Sprite):
 
         self.health = 10
 
+
 class Portal(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.portals
@@ -177,6 +169,7 @@ class Portal(pg.sprite.Sprite):
         self.rect.y = y * TILESIZE
 
         self.health = 10
+
 
 class Path(pg.sprite.Sprite):
     def __init__(self, game, x, y):
