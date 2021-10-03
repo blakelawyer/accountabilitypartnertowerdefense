@@ -16,6 +16,7 @@ class Game:
     def __init__(self):
         pg.init()
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
+        self.enemyScreen = pg.display.set_mode((WIDTH, HEIGHT))
         pg.display.set_caption(TITLE)
         icon = pg.image.load("tower.png")
         pg.display.set_icon(icon)
@@ -49,8 +50,8 @@ class Game:
                     Wall(self, col, row)
                 if tile == 'E':
                     calories.enemy_list.append(Enemy(self, col, row))
-                #if tile == 'P':
-                    #Path(self, col, row)
+                if tile == 'P':
+                    Path(self, col, row)
                 if tile == 'X':
                     Portal(self, col, row)
                 if tile == 'B':
@@ -92,55 +93,12 @@ class Game:
         for y in range(0, HEIGHT, TILESIZE):
             pg.draw.line(self.screen, LIGHTGREY, (0, y), (WIDTH, y))
 
-        #pg.draw.line(self.screen, RED, (26 * TILESIZE, 9 * TILESIZE), (31 * TILESIZE, 9 * TILESIZE)) #1
-        #pg.draw.line(self.screen, RED, (27 * TILESIZE, 10 * TILESIZE), (31 * TILESIZE, 10 * TILESIZE))  # 1
-
-
-        #pg.draw.line(self.screen, RED, (26 * TILESIZE, 11 * TILESIZE), (25 * TILESIZE, 9 * TILESIZE)) #2
-        #pg.draw.line(self.screen, RED, (27 * TILESIZE, 10 * TILESIZE), (27 * TILESIZE, 12 * TILESIZE))
-
-
-        #pg.draw.line(self.screen, RED, (17 * TILESIZE, 11 * TILESIZE), (27 * TILESIZE, 11 * TILESIZE))
-        #pg.draw.line(self.screen, RED, (27 * TILESIZE, 11 * TILESIZE), (16 * TILESIZE, 12 * TILESIZE))#3
-
-
-        #pg.draw.line(self.screen, RED, (19 * TILESIZE, 3 * TILESIZE), (19 * TILESIZE, 11 * TILESIZE))
-        #pg.draw.line(self.screen, RED, (16 * TILESIZE, 12 * TILESIZE), (16 * TILESIZE, 4 * TILESIZE))#4
-
-
-        #pg.draw.line(self.screen, RED, (11 * TILESIZE, 3 * TILESIZE), (17 * TILESIZE, 3 * TILESIZE))
-        #pg.draw.line(self.screen, RED, (16 * TILESIZE, 4 * TILESIZE), (12 * TILESIZE, 4 * TILESIZE))#5
-
-
-        #pg.draw.line(self.screen, RED, (11 * TILESIZE, 11 * TILESIZE), (11 * TILESIZE, 3 * TILESIZE))
-        #pg.draw.line(self.screen, RED, (12 * TILESIZE, 4 * TILESIZE), (12 * TILESIZE, 12 * TILESIZE))#6
-
-
-        #pg.draw.line(self.screen, RED, (5 * TILESIZE, 11 * TILESIZE), (11 * TILESIZE, 11 * TILESIZE))#7
-
-
-        #pg.draw.line(self.screen, RED, (5 * TILESIZE, 15 * TILESIZE), (5 * TILESIZE, 11 * TILESIZE)) #8
-
-
-        #pg.draw.line(self.screen, RED, (11 * TILESIZE, 15 * TILESIZE), (5 * TILESIZE, 15 * TILESIZE)) #9
-
-
-        #pg.draw.line(self.screen, RED, (11 * TILESIZE, 20 * TILESIZE), (11 * TILESIZE, 15 * TILESIZE)) #10
-
-
-        #pg.draw.line(self.screen, RED, (4 * TILESIZE, 20 * TILESIZE), (11 * TILESIZE, 20 * TILESIZE)) #11
-
-
-        #pg.draw.line(self.screen, RED, (4 * TILESIZE, 18 * TILESIZE), (4 * TILESIZE, 20 * TILESIZE)) #12
-
-
-        #pg.draw.line(self.screen, RED, (0 * TILESIZE, 18 * TILESIZE), (4 * TILESIZE, 18 * TILESIZE)) #13
-
 
     def draw(self):
         self.screen.fill(BGCOLOR)  # Fills the screen with the background color.
         self.draw_grid()  # Draws a grid for easy visualization, may be removed later.
         self.all_sprites.draw(self.screen)  # Draws all sprites by bliting them on screen.
+        self.enemies.draw(self.screen)
         pg.display.flip()
 
     def events(self):
