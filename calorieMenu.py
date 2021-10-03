@@ -1,9 +1,7 @@
 import pygame as pg
 import sys
 from pygame.locals import *
-
 import calories
-from calories import *
 
 pg.init()
 font = pg.font.SysFont(None, 20)

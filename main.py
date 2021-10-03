@@ -1,15 +1,13 @@
-import pygame as pg
-import sys
 from os import path
-import waveManager
-import calories
 from paused import paused
-from settings import *
-from sprites import *
 from calorieMenu import *
 from defenseManager import *
 from gameOver import *
 
+import logging
+import threading
+import time
+import server
 
 class Game:
     # Initializes the game, screen size, title, clock object, and prepares to load map data.
@@ -23,6 +21,8 @@ class Game:
         self.clock = pg.time.Clock()
         pg.key.set_repeat(500, 100)
         self.map_data()
+        self.bg = pg.image.load("thegrass.png")
+        self.waveTime = 0
 
     # Opens the map file and appends all the data to a list for easy access.
     def map_data(self):
@@ -71,6 +71,7 @@ class Game:
         while self.playing:
             self.dt = self.clock.tick(FPS) / 1000
             self.gameOverCheck()
+            self.sendWave()
             self.events()  # Handles events.
             self.update()  # Updates the game state based on events + time that's passed.
             self.draw()  # Each tick, we're re-drawing everything on the screen so that it's updated.
@@ -89,15 +90,17 @@ class Game:
         self.all_sprites.update()
 
     def draw_grid(self):
-        for x in range(0, WIDTH, TILESIZE):
-            pg.draw.line(self.screen, LIGHTGREY, (x, 0), (x, HEIGHT))
-        for y in range(0, HEIGHT, TILESIZE):
-            pg.draw.line(self.screen, LIGHTGREY, (0, y), (WIDTH, y))
+        #for x in range(0, WIDTH, TILESIZE):
+            #pg.draw.line(self.screen, LIGHTGREY, (x, 0), (x, HEIGHT))
+        #for y in range(0, HEIGHT, TILESIZE):
+            #pg.draw.line(self.screen, LIGHTGREY, (0, y), (WIDTH, y))
+        pass
 
 
     def draw(self):
-        self.screen.fill(BGCOLOR)  # Fills the screen with the background color.
-        self.draw_grid()  # Draws a grid for easy visualization, may be removed later.
+        #self.screen.fill(BGCOLOR)  # Fills the screen with the background color.
+        #self.draw_grid()  # Draws a grid for easy visualization, may be removed later.
+        self.screen.blit(self.bg, (0,0))
         self.all_sprites.draw(self.screen)  # Draws all sprites by bliting them on screen.
         self.enemies.draw(self.screen)
         pg.display.flip()
@@ -117,6 +120,24 @@ class Game:
                 if event.key == pg.K_SPACE:
                     paused(self)
             # if event.type == pg.
+
+
+    def receiveWave(self, enemyNum):
+        calories.enemiesToSend = enemyNum
+
+    def sendWave(self):
+
+        if self.waveTime == 0:
+            self.waveTime = pg.time.get_ticks()
+            calories.enemy_list.append(Enemy(self, 31, 9))
+        else:
+            current_time = pg.time.get_ticks()
+            if current_time - self.waveTime >= 1000:
+                calories.enemy_list.append(Enemy(self, 31, 9))
+                self.waveTime = current_time
+        #print(self.waveTime)
+        print(len(calories.enemy_list))
+
 
 
 g = Game()  # Creates Game object.
