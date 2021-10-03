@@ -3,7 +3,7 @@ import pygame as pg
 import calories
 from settings import *
 import math
-
+import random
 
 class Player(pg.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -78,8 +78,25 @@ class Enemy(pg.sprite.Sprite):
         self.groups = game.all_sprites, game.enemies
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pg.image.load("meat32.png")
+
+        pick = random.randint(1,7)
+        if pick == 1:
+            self.image = pg.image.load("meat32.png")
+        elif pick == 2:
+            self.image = pg.image.load("meat32.png")
+        elif pick == 3:
+            self.image = pg.image.load("burger32.png")
+        elif pick == 4:
+            self.image = pg.image.load("carrot32.png")
+        elif pick == 5:
+            self.image = pg.image.load("donut32.png")
+        elif pick == 6:
+            self.image = pg.image.load("cupcake32.png")
+        elif pick == 7:
+            self.image = pg.image.load("orange32.png")
+
         self.rect = self.image.get_rect()
+
         self.x = x
         self.y = y
         self.rect.x = x * TILESIZE
@@ -226,8 +243,8 @@ class Base(pg.sprite.Sprite):
         self.groups = game.all_sprites, game.bases
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pg.Surface((TILESIZE, TILESIZE))
-        self.image.fill(WHITE)
+        self.image = pg.image.load("stomach.png")
+        self.rect = self.image.get_rect()
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y

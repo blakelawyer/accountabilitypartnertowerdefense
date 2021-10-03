@@ -68,7 +68,7 @@ class Game:
         # The game loop - when self.playing = false, the game ends.
         self.playing = True
         while self.playing:
-            self.dt = self.clock.tick(FPS) / 1000
+            self.dt = self.clock.tick(FPS) / 3000
             self.gameOverCheck()
             self.sendWave()
             self.events()  # Handles events.
@@ -128,12 +128,10 @@ class Game:
 
         if self.waveTime == 0:
             self.waveTime = pg.time.get_ticks()
-            calories.enemy_list.append(Enemy(self, 31, 9))
+            calories.enemy_list.append(Enemy(self, 30, 9))
         else:
             current_time = pg.time.get_ticks()
-            if current_time - self.waveTime >= 1000:
-                calories.enemy_list.append(Enemy(self, 31, 9))
+            if current_time - self.waveTime >= 3000:
+                calories.enemy_list.append(Enemy(self, 30, 9))
                 self.waveTime = current_time
-        #print(self.waveTime)
-        print(len(calories.enemy_list))
 
