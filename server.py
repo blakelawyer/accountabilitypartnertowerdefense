@@ -13,7 +13,7 @@ server.bind(ADDR)
 
 
 def handle_client(conn, addr):
-    thread = threading.Thread(target=send, args=conn)
+    thread = threading.Thread(target=reply, args=conn)
     thread.start()
     while True:
         msg_length = conn.recv(HEADER).decode(FORMAT)
@@ -23,9 +23,17 @@ def handle_client(conn, addr):
             print(f"[{addr}] {msg}")
 
 
-def send(conn):
+def reply(conn):
     while True:
-        conn.send(input().encode(FORMAT))
+        conn.send(conn)
+
+def send(conn):
+    message = input().encode(FORMAT)
+    msg_length = len(message)
+    send_length = str(msg_length).encode(FORMAT)
+    send_length += b' ' * (HEADER - len(send_length))
+    conn.send(send_length)
+    conn.send(message)
 
 def start():
     server.listen()
