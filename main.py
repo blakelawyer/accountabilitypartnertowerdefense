@@ -1,6 +1,8 @@
 import pygame as pg
 import sys
 from os import path
+
+import calories
 from settings import *
 from sprites import *
 from calorieMenu import *
@@ -56,7 +58,7 @@ class Game:
                 if tile == 'B':
                     Base(self, col, row)
                 if tile == 'T':
-                    Tower(self, col, row)
+                    calories.enemy_list.append(Tower(self, col, row))
 
     def run(self):
         # The game loop - when self.playing = false, the game ends.
@@ -75,6 +77,8 @@ class Game:
     # Updates all sprites in the designated group.
     def update(self):
         self.all_sprites.update()
+        for tower in self.towers:
+            tower.update
 
     def draw_grid(self):
         for x in range(0, WIDTH, TILESIZE):

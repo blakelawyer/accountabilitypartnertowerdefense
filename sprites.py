@@ -1,4 +1,6 @@
 import pygame as pg
+
+import calories
 from settings import *
 
 
@@ -78,8 +80,6 @@ class Enemy(pg.sprite.Sprite):
         self.game = game
         self.image = pg.Surface((TILESIZE, TILESIZE))
         self.image.fill(RED)
-        image = pg.image.load("tower.png")
-        self.image = image
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -105,6 +105,8 @@ class Tower(pg.sprite.Sprite):
         self.game = game
         self.image = pg.Surface((TILESIZE, TILESIZE))
         self.image.fill(BLUE)
+        image = pg.image.load("tower.png")
+        self.image = image
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -114,6 +116,9 @@ class Tower(pg.sprite.Sprite):
         self.damage = 25
         self.range = 10
         self.shotSpeed = 1
+
+    def update_tower(self):
+        print(1)
 
 
 class Base(pg.sprite.Sprite):
