@@ -115,7 +115,7 @@ class Game:
                 if event.key == pg.K_e:
                     calorieMenuScreen(self)
                 if event.key == pg.K_q:
-                    defenseManagerScreen(g)
+                    defenseManagerScreen(self)
                 if event.key == pg.K_SPACE:
                     paused(self)
             # if event.type == pg.
